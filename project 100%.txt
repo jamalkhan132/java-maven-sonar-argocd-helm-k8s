@@ -19,6 +19,12 @@ sudo apt-get install jenkins
 jenkins plugins
 1 Dockerpipline
 2 sonarscanner
+==============
+credentials
+==============
+Secrete text sonarqube
+Secrete text github 
+username password Docker
 
 =========================================================================================
 Next Steps
