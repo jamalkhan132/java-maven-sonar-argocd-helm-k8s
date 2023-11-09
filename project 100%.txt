@@ -1,0 +1,50 @@
+Run the below commands to install Java and Jenkins
+Install Java
+
+sudo apt update
+sudo apt install openjdk-11-jre
+Verify Java is Installed
+
+java -version
+Now, you can proceed with installing Jenkins
+
+curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+
+=========================================================================================
+Next Steps
+Configure a Sonar Server locally
+apt install unzip
+adduser sonarqube
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
+unzip *
+chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
+chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-9.4.0.54424
+cd sonarqube-9.4.0.54424/bin/linux-x86-64/
+./sonar.sh start
+==========================================================================================
+Docker Slave Configuration
+Run the below command to Install Docker
+
+sudo apt update
+sudo apt install docker.io
+Grant Jenkins user and Ubuntu user permission to docker deamon.
+sudo su - 
+usermod -aG docker jenkins
+usermod -aG docker ubuntu
+systemctl restart docker
+Once you are done with the above steps, it is better to restart Jenkins.
+
+http://<ec2-instance-public-ip>:8080/restart
+The docker agent configuration is now successful.
+=============================================================================================
+Argo CD
+
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
