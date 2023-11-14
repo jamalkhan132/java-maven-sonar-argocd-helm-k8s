@@ -53,6 +53,17 @@ Once you are done with the above steps, it is better to restart Jenkins.
 http://<ec2-instance-public-ip>:8080/restart
 The docker agent configuration is now successful.
 =============================================================================================
+
+Helm && Argo CD
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+$ helm version
+$ kubectl get all
+
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
 Argo CD
 
 kubectl create namespace argocd
